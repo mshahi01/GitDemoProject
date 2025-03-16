@@ -1,55 +1,57 @@
 package Tutorial.example.MyApp.Controllers;
 
-
 import Tutorial.example.MyApp.DTO.EmployeeDTO;
 import Tutorial.example.MyApp.Services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 //This is the chnage
 
+//One more change to Controller
 @RestController
-@RequestMapping(path= "/employees")
-@ComponentScan(basePackages = "Tutorial.example.MyApp*")
-@EnableJpaRepositories(basePackages = "Tutorial.example.MyApp.Reposotories")
-@EntityScan(basePackages = "Tutorial.example.MyApp.Entities")
+@RequestMapping("/employees")
 public class EmployeeController {
 
-   @Autowired
     private final EmployeeService employeeService;
 
+    @Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
-    @GetMapping(path= "/{id}")
-    public EmployeeDTO getEmployeesById(@PathVariable("id") long employeeId)
-    {
-        return employeeService.getEmployeeById(employeeId);
+    @GetMapping("/oddOrEven/{number}")
+    public String oddOrEven(@PathVariable int number) {
+        return (number % 2 == 0) ? "even" : "odd";
     }
 
+    @GetMapping("/{id}")
+    public EmployeeDTO getEmployeesById(@PathVariable long id) {
+        return employeeService.getEmployeeById(id);
+    }
+
+    /**
+     * This method creates a new employee
+     * @param employeeDTO
+     * @return
+     */
     @PostMapping
-    public EmployeeDTO createNewEmployee(@RequestBody EmployeeDTO employeeDTO)
-    {
+    public EmployeeDTO createNewEmployee(@RequestBody EmployeeDTO employeeDTO) {
         return employeeService.createNewEmployee(employeeDTO);
     }
 
     @GetMapping
-    public List<EmployeeDTO> getAllEmployees()
-    {
+    public List<EmployeeDTO> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
-    @DeleteMapping(path = "/{id}")
-    public boolean deleteEmployeeById(@PathVariable Long id)
-    {
+    /**
+     * This method deletes an employee by id
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    public boolean deleteEmployeeById(@PathVariable Long id) {
         return employeeService.deleteEmployeeById(id);
-
     }
-
-
 }
