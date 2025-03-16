@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 public class MyAppApplication {
 
 	//Changes to Master
+	//One more chnage to Master
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyAppApplication.class, args);
